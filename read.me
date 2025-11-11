@@ -1,0 +1,135 @@
+Endpoints disponibles
+1. Verificar que la API funciona
+
+GET /
+
+Ejemplo de respuesta:
+
+"API de reservas de pádel funcionando (con almacenamiento en archivo)"
+
+2. Crear una reserva
+
+POST /reservas
+
+Body (JSON):
+
+{
+  "nombre": "Juan",
+  "cancha": "1",
+  "horario": "18:00",
+  "fecha": "2025-11-12"
+}
+
+
+Respuestas posibles:
+
+201 Created:
+Devuelve la reserva creada.
+
+400 Bad Request:
+Si faltan datos obligatorios.
+
+409 Conflict:
+Si la cancha ya está reservada en esa fecha y horario.
+
+3. Obtener todas las reservas
+
+GET /reservas
+
+Descripción:
+Devuelve un listado de todas las reservas guardadas.
+
+Ejemplo de respuesta:
+
+[
+  {
+    "id": 1,
+    "nombre": "Juan",
+    "cancha": "1",
+    "horario": "18:00",
+    "fecha": "2025-11-12"
+  }
+]
+
+4. Verificar disponibilidad de cancha
+
+GET /reservas/disponibilidad
+
+Parámetros (query):
+
+cancha: número o nombre de la cancha
+
+fecha: fecha de la reserva (formato AAAA-MM-DD)
+
+horario: hora de la reserva (formato HH:mm)
+
+Ejemplo de llamada:
+
+http://localhost:3000/reservas/disponibilidad?cancha=1&fecha=2025-11-12&horario=18:00
+
+
+Respuestas posibles:
+
+Si la cancha está disponible:
+
+{ "mensaje": "Cancha 1 disponible en fecha 2025-11-12 a las 18:00" }
+
+
+Si la cancha está ocupada:
+
+{ "mensaje": "Cancha 1 ocupada en fecha 2025-11-12 a las 18:00" }
+
+5. Eliminar una reserva
+
+DELETE /reservas/:id
+
+Ejemplo de llamada:
+
+DELETE http://localhost:3000/reservas/1
+
+
+Respuestas posibles:
+
+200 OK:
+
+{ "mensaje": "Reserva eliminada" }
+
+
+404 Not Found:
+Si la reserva no existe.
+
+Archivo de almacenamiento
+
+Las reservas se guardan automáticamente en el archivo:
+
+/data/reservas.json
+
+
+Cada vez que se crea o elimina una reserva, el archivo se actualiza en tiempo real.
+
+6. Actualizar una reserva
+
+PUT /reservas/:id
+
+Body (JSON):
+
+{
+  "nombre": "Juan Actualizado",
+  "cancha": "2",
+  "horario": "19:00",
+  "fecha": "2025-11-12"
+}
+
+
+Descripción:
+Permite modificar los datos de una reserva existente.
+Se puede cambiar el nombre, la cancha, el horario o la fecha.
+Antes de aplicar el cambio, se valida que la cancha no esté ocupada en la nueva fecha y horario.
+
+Respuestas posibles:
+
+200 OK: Reserva actualizada correctamente.
+
+404 Not Found: Si no se encuentra la reserva.
+
+409 Conflict: Si el nuevo horario o cancha ya está ocupado.

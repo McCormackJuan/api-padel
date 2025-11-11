@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan",
+    "cancha": "2",
+    "horario": "18:00",
+    "fecha": "2025-11-12"
+  },
+  {
+    "id": 2,
+    "nombre": "Juan",
+    "cancha": "3",
+    "horario": "18:00",
+    "fecha": "2025-11-12"
+  }
+]
